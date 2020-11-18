@@ -68,5 +68,22 @@ public class UsuariosDao {
 		});
 
 	}
+	
+	public void editarUsuario(EditarUsuario request) {
+		poolDB.jdbcIfood().update(new PreparedStatementCreator() {
+		    @Override
+		    public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+		        PreparedStatement ps = con.prepareStatement("update from ifood.usuarios(id_usuario, nome) \r\n"
+		        		+ "SET (uuid(), \"?\");");
+		        
+		        int i = 1;
+		        
+		        ps.setString(i++, request.getNome());
+		        
+		        return ps;
+		    }
+		});
+
+	}
 
 }

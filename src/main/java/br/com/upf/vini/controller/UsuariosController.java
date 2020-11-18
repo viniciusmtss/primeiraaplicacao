@@ -13,6 +13,7 @@ import com.sun.istack.NotNull;
 
 import br.com.upf.vini.dto.CadastrarUsuario;
 import br.com.upf.vini.dto.ConsultarUsuariosResponse;
+import br.com.upf.vini.dto.EditarUsuario;
 import br.com.upf.vini.services.UsuariosServices;
 
 @Service
@@ -40,6 +41,17 @@ public class UsuariosController {
 		try {
 			services.cadastrarUsuario(request);
 			return new ResponseEntity<Object>(null, HttpStatus.CREATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT)
+	public ResponseEntity<Object> editarUsuario(@RequestBody(required = true)@NotNull EditarUsuario request) {
+		try {
+			services.EditarUsuario(request);
+			return new ResponseEntity<Object>(null, HttpStatus.);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);

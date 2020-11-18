@@ -25,5 +25,11 @@ public class UsuariosServices {
 		
 		
 	}
+	
+	public void editarUsuario(EditarUsuario request) {
+		
+		dao.editarUsuario(request);
+		
+	}
 
 }
