@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.upf.vini.connection.PoolDB;
 import br.com.upf.vini.dto.CadastrarUsuario;
+import br.com.upf.vini.dto.EditarUsuario;
 import br.com.upf.vini.model.Usuarios;
 
 @Repository
@@ -69,16 +70,32 @@ public class UsuariosDao {
 
 	}
 	
-	public void editarUsuario(EditarUsuario request) {
+	public void editarUsuario(String idUsuario, EditarUsuario request) {
 		poolDB.jdbcIfood().update(new PreparedStatementCreator() {
 		    @Override
 		    public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-		        PreparedStatement ps = con.prepareStatement("update from ifood.usuarios(id_usuario, nome) \r\n"
-		        		+ "SET (uuid(), \"?\");");
+		        PreparedStatement ps = con.prepareStatement("update ifood.usuarios SET nome = ? where id_usuario = ?");
 		        
 		        int i = 1;
 		        
 		        ps.setString(i++, request.getNome());
+		        ps.setString(i++, idUsuario);
+		        
+		        return ps;
+		    }
+		});
+
+	}
+	
+	public void deletarUsuario(String idUsuario) {
+		poolDB.jdbcIfood().update(new PreparedStatementCreator() {
+		    @Override
+		    public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+		        PreparedStatement ps = con.prepareStatement("DELETE FROM ifood.usuarios WHERE id_usuario = ?");
+		        
+		        int i = 1;
+		        
+		        ps.setString(i++, idUsuario);
 		        
 		        return ps;
 		    }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,12 +47,23 @@ public class UsuariosController {
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<Object> editarUsuario(@RequestBody(required = true)@NotNull EditarUsuario request) {
+
+	@RequestMapping(value = "/{id_usuario}",method = RequestMethod.PUT)
+	public ResponseEntity<Object> editarUsuario(@PathVariable(name = "id_usuario", required = true) String idUsuario,@RequestBody(required = true) @NotNull EditarUsuario request) {
 		try {
-			services.EditarUsuario(request);
-			return new ResponseEntity<Object>(null, HttpStatus.);
+			services.editarUsuario(idUsuario, request);
+			return new ResponseEntity<Object>(null, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/{id_usuario}",method = RequestMethod.DELETE)
+	public ResponseEntity<Object> deletarUsuario(@PathVariable(name = "id_usuario", required = true) String idUsuario) {
+		try {
+			services.deletarUsuario(idUsuario);
+			return new ResponseEntity<Object>(null, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);

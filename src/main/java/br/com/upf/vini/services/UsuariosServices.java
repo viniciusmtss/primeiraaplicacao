@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.upf.vini.dao.UsuariosDao;
 import br.com.upf.vini.dto.CadastrarUsuario;
+import br.com.upf.vini.dto.EditarUsuario;
 import br.com.upf.vini.model.Usuarios;
 
 @Service
@@ -26,10 +27,22 @@ public class UsuariosServices {
 		
 	}
 	
-	public void editarUsuario(EditarUsuario request) {
+	public void editarUsuario(String idUsuario ,EditarUsuario request) throws Exception {
 		
-		dao.editarUsuario(request);
+		if (request.getNome()==null|| request.getNome().isEmpty()) {
+			throw new Exception("O nome é obrigatorio");
+		}
+		dao.editarUsuario(idUsuario, request);
+		 
 		
+	}
+	
+	public void deletarUsuario(String idUsuario) {
+		
+
+		
+		dao.deletarUsuario(idUsuario);
+	
 	}
 
 }
